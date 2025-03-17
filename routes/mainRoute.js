@@ -11,7 +11,7 @@ mainRouter.get("/", (req,res)=>{
 
 
 
-mainRouter.use("/employe", (req,res,next) =>{
+mainRouter.use("/employe/", (req,res,next) =>{
     if(req.path === "/"){
 
         res.end("Estas en la seccion de empleados aca puedes acceder a todos los empleados (/allEmployes) o buscarlos por nombre(/byName/:nameEmploye) o por el id(/byId/idEmploye), tambien podras crear un nuevo empleado (/createEmploye) ")

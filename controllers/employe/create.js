@@ -7,7 +7,7 @@ let createOneEmploye = async (req, res, next) => {
         let employeCreated = await employeModel.create(employeInfo);
         return res.status(201).json({ response: employeCreated });
     } catch (error) {
-        return res.status(500).json({ response: error });
+        next(error)
     }
 };
 
@@ -18,7 +18,7 @@ let createManyEmploye = async (req, res, next) => {
         let employeCreated = await employeModel.insertMany(employeInfo);
         return res.status(201).json({ response: employeCreated });
     } catch (error) {
-        return res.status(500).json({ response: error });
+        next(error)
     }
 };
 

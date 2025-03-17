@@ -1,68 +1,43 @@
-import storeModel from "../../modules/storeModel.js"
+import storeModel from "../../modules/storeModel.js";
 
-const allStores = async (req,res,next)=>{
+const allStores = async (req, res, next) => {
+  try {
+    let allStores = await storeModel.find();
 
-    try {
+    return res.status(200).json({ response: allStores });
+  } catch (error) {
+    next(error);
+  }
+};
 
-        let allStores = await storeModel.find()
+const storesByName = async (req, res, next) => {
+  try {
+    let nameParamStore = req.params.nameStore;
 
-        return res.status(200).json(
-            {response: allStores}
-        )
-        
-    } catch (error) {
-        return res.status(500).json(
-            {response: error}
-        )
+    if (typeof nameParamStore !== 'string' || !/^[a-zA-Z\s]+$/.test(nameParamStore)) {
+        const error = new Error("El nombre debe ser un string con solo letras");
+        error.status = 400;
+        return next(error);
     }
 
-}
+    let nameStore = await storeModel.find({ name: nameParamStore });
 
-const storesByName = async (req,res,next)=>{
+    return res.status(200).json({ response: nameStore });
+  } catch (error) {
+    next(error);
+  }
+};
 
-    try {
-        
-        let nameParamStore = req.params.nameStore
-       
+const storesById = async (req, res, next) => {
+  console.log("Entro en la funcion");
+  try {
+    let idParamStore = req.params.idStore;
+    let nameStore = await storeModel.findById(idParamStore);
 
-        let nameStore = await storeModel.find({name: nameParamStore})
+    return res.status(200).json({ response: nameStore });
+  } catch (error) {
+    next(error);
+  }
+};
 
-    
-
-        return res.status(200).json(
-
-            {response:nameStore}
-        )
-        
-    } catch (error) {
-        return res.status(500).json(
-            {response: error}
-        )
-    }
-
-}
-
-
-const storesById = async (req,res,next)=>{
-    console.log("Entro en la funcion")
-    try {
-
-        let idParamStore =  req.params.idStore
-        console.log("este es el id ", idParamStore)
-
-        let nameStore = await storeModel.findById(idParamStore);
-
-        return res.status(200).json(
-            {response:nameStore}
-        )
-        
-    } catch (error) {
-        return res.status(500).json(
-            {response: error}
-        )
-    }
-
-}
-
-
-export {allStores, storesByName, storesById}
+export { allStores, storesByName, storesById };
