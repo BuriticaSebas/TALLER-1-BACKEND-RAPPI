@@ -11,6 +11,8 @@ let createOneProduct = async (req, res, next) => {
     }
 };
 
+
+
 let createManyProduct = async (req, res, next) => {
     try {
         let productInfo = req.body;

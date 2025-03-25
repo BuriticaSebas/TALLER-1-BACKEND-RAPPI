@@ -24,7 +24,7 @@ const productsByName = async (req, res, next) => {
         next(error)
     }
 };
-
+ 
 const productsById = async (req, res, next) => {
     try {
         let idParamProduct = req.params.idProduct;
